@@ -10,10 +10,27 @@ class Proveedor:
     
     def __eq__(self, other):
         if isinstance(other, Proveedor):
-            return self.nombre == other.nombre and self.id == other.id and self.servicio == other.servicio and self.calificacion == other.calificacion
+            return (self.nombre == other.nombre and 
+                    self.id == other.id and 
+                    self.servicio == other.servicio and 
+                    self.calificacion == other.calificacion)
         elif isinstance(other, str):
             return self.servicio == other
         elif isinstance(other, int):
             return self.id == other
         return False
+
+    def __lt__(self, other):
+        if isinstance(other, Proveedor):
+            return self.id < other.id
+        elif isinstance(other, int):
+            return self.calificacion < other
+        return NotImplemented
     
+    def __gt__(self, other):
+        if isinstance(other, Proveedor):
+            return self.id > other.id
+        elif isinstance(other, int):
+            return self.calificacion > other
+        return NotImplemented
+        
