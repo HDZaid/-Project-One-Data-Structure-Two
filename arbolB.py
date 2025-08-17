@@ -1,112 +1,153 @@
+# ╔════════════════════════════════════════════════════════════════╗
+# ║                       ÁRBOL B                                  ║
+# ╠════════════════════════════════════════════════════════════════╣
+# ║ FECHA:      29/07/2025                                         ║
+# ║ CURSO:      Estructura de datos II                             ║
+# ║ DOCENTE:    Ing. Luis Hernández                                ║
+# ║ INSTITUCIÓN:URL                                                ║
+# ╠════════════════════════════════════════════════════════════════╣
+# ║ DESCRIPCIÓN:                                                   ║
+# ║ Código corregido para seguir la metodología tradicional:       ║
+# ║     claves máximo    u=ORDEN-1                                 ║
+# ║     claves mínimas   l=(ORDEN//2)-1                            ║
+# ╚════════════════════════════════════════════════════════════════╝
+
 class NodoB:
-    def __init__(self, orden):
+    def __init__(self, orden, es_hoja=True):
         self.orden = orden              # Grado mínimo (orden del árbol B)
         self.claves = []               # Lista de claves (valores) almacenadas en este nodo
         self.hijos = []                # Lista de hijos de este nodo
-        self.hoja = True               # Por defecto, todo nuevo nodo es una hoja
+        self.es_hoja = es_hoja         # Indica si este nodo es una hoja
+
 class ArbolB:
     def __init__(self, orden):
-        self.orden = orden             # Se define el orden del árbol (por ejemplo, 2)
+        if orden < 2:
+            raise ValueError("El orden del arbol B debe ser al menos 2")
+        self.orden = orden             # Se define el orden del árbol
         self.raiz = NodoB(orden)       # Se crea la raíz vacía inicialmente
 
     def insertar(self, clave):
-        nodo_raiz = self.raiz
-
-        # PASO 1: Verificamos si la raíz está llena (tiene 2*orden - 1 claves)
-        if len(nodo_raiz.claves) == 2 * self.orden - 1:
+        raiz = self.raiz
+        
+        # CORREGIDO: Un nodo está lleno cuando tiene (orden - 1) claves
+        if len(raiz.claves) == self.orden - 1:
+            nueva_raiz = NodoB(self.orden, False)  # La nueva raíz no es hoja
+            nueva_raiz.hijos.append(self.raiz)     # La raíz actual se vuelve hijo
+            self._dividir_hijo(nueva_raiz, 0)      # Dividir el hijo lleno
+            self.raiz = nueva_raiz                 # Actualizar la raíz
             
-            # Si está llena, se crea una nueva raíz
-            nueva_raiz = NodoB(self.orden)
-            nueva_raiz.hoja = False   # La nueva raíz no es hoja
-            nueva_raiz.hijos.append(self.raiz)  # La raíz anterior se vuelve hijo
+        self._insertar_no_lleno(self.raiz, clave)
 
-            # Se divide el hijo lleno (la raíz antigua)
-            self.dividir(nueva_raiz, 0)
-
-            # Ahora se inserta la clave en la nueva raíz
-            self.insertar_en_nodo(nueva_raiz, clave)
-
-            # Actualizamos la raíz del árbol
-            self.raiz = nueva_raiz
+    def _insertar_no_lleno(self, nodo, clave):
+        i = len(nodo.claves) - 1
+        
+        if nodo.es_hoja:
+            # Insertar en hoja: encontrar posición e insertar
+            nodo.claves.append(0)  # Expandir la lista
+            while i >= 0 and nodo.claves[i] > clave:
+                nodo.claves[i + 1] = nodo.claves[i]
+                i -= 1
+            nodo.claves[i + 1] = clave
         else:
-            # Si la raíz no está llena, insertamos normalmente
-            self.insertar_en_nodo(nodo_raiz, clave)
-
-    def insertar_en_nodo(self, nodo_actual, clave):
-        # PASO 2: Insertar la clave en el nodo correspondiente
-
-        if nodo_actual.hoja:
-            # Si el nodo actual es una hoja, simplemente insertamos la clave
-            nodo_actual.claves.append(clave)
-            nodo_actual.claves.sort()  # Ordenamos las claves (mantener orden)
-        else:
-            # Si no es hoja, buscamos en qué hijo debe ir la clave
-            i = 0
-            while i < len(nodo_actual.claves) and clave > nodo_actual.claves[i]:
-                i += 1
-
-            # PASO 3: Verificamos si el hijo donde va la clave está lleno
-            if len(nodo_actual.hijos[i].claves) == 2 * self.orden - 1:
-                # Si está lleno, lo dividimos
-                self.dividir(nodo_actual, i)
-
-                # Luego de dividir, puede cambiar la posición donde debemos insertar
-                if clave > nodo_actual.claves[i]:
-                    i += 1
-
-            # PASO 4: Insertar recursivamente en el hijo adecuado
-            self.insertar_en_nodo(nodo_actual.hijos[i], clave)
-
-    def dividir(self, nodo_padre, i):
-        t = self.orden
-        nodo_hijo = nodo_padre.hijos[i]
-
-        nuevo_nodo = NodoB(self.orden)
-        nuevo_nodo.hoja = nodo_hijo.hoja
-
-        # Clave del medio
-        clave_mitad = nodo_hijo.claves[t - 1]
-
-        # Dividir claves
-        nuevo_nodo.claves = nodo_hijo.claves[t:]     # Parte derecha
-        nodo_hijo.claves = nodo_hijo.claves[:t - 1]  # Parte izquierda
-
-        # Si no es hoja, dividir hijos
-        if not nodo_hijo.hoja:
-            nuevo_nodo.hijos = nodo_hijo.hijos[t:]
-            nodo_hijo.hijos = nodo_hijo.hijos[:t]
-
-        # Insertar en el padre
-        nodo_padre.claves.insert(i, clave_mitad)
-        nodo_padre.hijos.insert(i + 1, nuevo_nodo)
-
-
-    def mostrar(self, nodo_actual=None, nivel=0):
-        # Imprimir recursivamente el árbol por niveles (identado)
-        if nodo_actual is None:
-            nodo_actual = self.raiz
-        print("  " * nivel + str(nodo_actual.claves))
-        for hijo in nodo_actual.hijos:
-            self.mostrar(hijo, nivel + 1)
-
-    def buscar(self, clave, nodo_actual=None):
-        if nodo_actual is None:
-            nodo_actual = self.raiz
-
-        # Buscar la posición donde la clave podría estar en este nodo
-        i = 0
-        while i < len(nodo_actual.claves) and clave > nodo_actual.claves[i]:
+            # Insertar en nodo interno: encontrar el hijo correcto
+            while i >= 0 and nodo.claves[i] > clave:
+                i -= 1
             i += 1
+            
+            # CORREGIDO: Si el hijo está lleno, dividirlo
+            if len(nodo.hijos[i].claves) == self.orden - 1:
+                self._dividir_hijo(nodo, i)
+                if nodo.claves[i] < clave:
+                    i += 1
+            
+            self._insertar_no_lleno(nodo.hijos[i], clave)
 
-        # Si la clave se encuentra en este nodo
-        if i < len(nodo_actual.claves) and nodo_actual.claves[i] == clave:
-            print(f" Clave {clave} encontrada en el nodo: {nodo_actual.claves}")
+    def _dividir_hijo(self, padre, indice):
+        hijo_lleno = padre.hijos[indice]
+        nuevo_hijo = NodoB(self.orden, hijo_lleno.es_hoja)
+        
+        # CORREGIDO: Índice del medio para metodología tradicional
+        # Con orden n, tenemos n-1 claves máximo
+        # El medio está en la posición (n-1)//2
+        medio = (self.orden - 1) // 2
+        
+        # IMPORTANTE: Extraer la clave del medio ANTES de modificar las listas
+        clave_medio = hijo_lleno.claves[medio]
+        
+        # Mover las claves de la mitad superior al nuevo nodo
+        nuevo_hijo.claves = hijo_lleno.claves[medio + 1:]
+        hijo_lleno.claves = hijo_lleno.claves[:medio]
+        
+        # Si no es hoja, mover también los hijos
+        if not hijo_lleno.es_hoja:
+            nuevo_hijo.hijos = hijo_lleno.hijos[medio + 1:]
+            hijo_lleno.hijos = hijo_lleno.hijos[:medio + 1]
+        
+        # Insertar el nuevo hijo en el padre
+        padre.hijos.insert(indice + 1, nuevo_hijo)
+        
+        # Mover la clave del medio al padre
+        padre.claves.insert(indice, clave_medio)
+
+    def buscar(self, clave, nodo=None):
+        if nodo is None:
+            nodo = self.raiz
+            
+        i = 0
+        while i < len(nodo.claves) and clave > nodo.claves[i]:
+            i += 1
+            
+        # Si encontramos la clave
+        if i < len(nodo.claves) and clave == nodo.claves[i]:
+            print(f" Clave {clave} encontrada en el nodo: {nodo.claves}")
             return True
-
+            
         # Si es hoja y no se encontró
-        if nodo_actual.hoja:
+        if nodo.es_hoja:
             print(f" Clave {clave} no encontrada.")
             return False
+            
+        # Buscar recursivamente en el hijo apropiado
+        return self.buscar(clave, nodo.hijos[i])
 
-        # Si no es hoja, buscar recursivamente en el hijo correspondiente
-        return self.buscar(clave, nodo_actual.hijos[i])
+    def mostrar(self, nodo=None, nivel=0):
+        if nodo is None:
+            nodo = self.raiz
+            
+        # Solo mostrar nodos que tienen claves
+        if len(nodo.claves) > 0:
+            print("  " * nivel + str(nodo.claves))
+            
+        # Mostrar hijos solo si no es hoja
+        if not nodo.es_hoja:
+            for hijo in nodo.hijos:
+                self.mostrar(hijo, nivel + 1)
+
+    '''
+    def verificar_propiedades(self, nodo=None, es_raiz=True):
+        """Función para verificar que el árbol cumple las propiedades del Árbol B"""
+        if nodo is None:
+            nodo = self.raiz
+            
+        claves_max = self.orden - 1
+        claves_min = (self.orden // 2) - 1 if not es_raiz else 0
+        
+        # Verificar número de claves
+        num_claves = len(nodo.claves)
+        if num_claves > claves_max:
+            print(f"ERROR: Nodo {nodo.claves} tiene {num_claves} claves, máximo permitido: {claves_max}")
+            return False
+        if num_claves < claves_min:
+            print(f"ERROR: Nodo {nodo.claves} tiene {num_claves} claves, mínimo requerido: {claves_min}")
+            return False
+            
+        print(f"✓ Nodo {nodo.claves}: {num_claves} claves (min: {claves_min}, max: {claves_max})")
+        
+        # Verificar hijos recursivamente
+        if not nodo.es_hoja:
+            for hijo in nodo.hijos:
+                if not self.verificar_propiedades(hijo, False):
+                    return False
+                    
+        return True
+    '''
