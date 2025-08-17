@@ -1,10 +1,10 @@
-print('my work  here was finished, but yours is started now :) ')
 from proveedor import Proveedor
 from arbolB import ArbolB
 
 def main():
     # Crear instancia del árbol B
-    arbol = ArbolB()
+    tamano_orden = int(input("Ingrese el orden del árbol B (minimo 2): "))
+    arbol = ArbolB(tamano_orden)
 
     # Crear algunos proveedores
     proveedor1 = Proveedor("Proveedor A", "Calle 123", "555-1234")
