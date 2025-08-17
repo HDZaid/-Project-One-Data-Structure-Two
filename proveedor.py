@@ -6,7 +6,7 @@ class Proveedor:
         self.calificacion = calificacion
 
     def __str__(self):
-        return f" \n ---------------------------------- \n ID: {self.id} \n Proveedor: {self.nombre}\n Tipo de Servicio: {self.servicio} \n Calificación: {self.calificacion} \n ---------------------------------------- \n"
+        return f" \n "+'='*50+" \n ID: {self.id} \n Proveedor: {self.nombre}\n Tipo de Servicio: {self.servicio} \n Calificación: {self.calificacion} \n "+'='*50+" \n"
     
     def __eq__(self, other):
         if isinstance(other, Proveedor):
