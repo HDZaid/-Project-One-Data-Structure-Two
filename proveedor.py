@@ -1,14 +1,19 @@
 class Proveedor:
-    def __init__(self, nombre, direccion, telefono):
-        self.ID = None
+    def __init__(self, nombre, id, servicio, calificacion):
         self.nombre = nombre
-        self.direccion = direccion
-        self.telefono = telefono
+        self.id = id
+        self.servicio = servicio
+        self.calificacion = calificacion
 
     def __str__(self):
-        return f"Proveedor: {self.nombre}, Dirección: {self.direccion}, Teléfono: {self.telefono}"
+        return f" \n ---------------------------------- \n ID: {self.id} \n Proveedor: {self.nombre}\n Tipo de Servicio: {self.servicio} \n Calificación: {self.calificacion} \n ---------------------------------------- \n"
     
     def __eq__(self, other):
         if isinstance(other, Proveedor):
-            return self.nombre == other.nombre and self.direccion == other.direccion and self.telefono == other.telefono
+            return self.nombre == other.nombre and self.id == other.id and self.servicio == other.servicio and self.calificacion == other.calificacion
+        elif isinstance(other, str):
+            return self.servicio == other
+        elif isinstance(other, int):
+            return self.id == other
         return False
+    
