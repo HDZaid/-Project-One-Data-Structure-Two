@@ -1,5 +1,8 @@
+from functools import total_ordering
+
+@total_ordering
 class Proveedor:
-    def __init__(self, nombre, id, servicio, calificacion):
+    def __init__(self, nombre, id, servicio, calificacion: int):
         self.nombre = nombre
         self.id = id
         self.servicio = servicio
@@ -13,7 +16,7 @@ class Proveedor:
         )
 
     def enmascarado_calificacion(self):
-        return '★ ' * int(self.calificacion)
+        return " ".join("★" for _ in range(self.calificacion))
     
     def __eq__(self, other):
         if isinstance(other, Proveedor):
@@ -31,13 +34,5 @@ class Proveedor:
         if isinstance(other, Proveedor):
             return self.id < other.id
         elif isinstance(other, int):
-            return self.calificacion < other
+            return self.id < other
         return NotImplemented
-    
-    def __gt__(self, other):
-        if isinstance(other, Proveedor):
-            return self.id > other.id
-        elif isinstance(other, int):
-            return self.calificacion > other
-        return NotImplemented
-        

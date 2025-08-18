@@ -3,16 +3,16 @@ from arbolB import ArbolB
 #funcion que inserta datos iniciales en el arbol
 def insertar_datos(arbol):
    
-    proveedor1 = Proveedor("Miku", "1", "electricista", "5")
-    proveedor2 = Proveedor("Teto", "2", "plomera", "4")
-    proveedor3 = Proveedor("Jimbo", "3", "carpintero", "3")
-    proveedor4 = Proveedor("Lucho", "4", "pintor", "2")
-    proveedor5 = Proveedor("Marta", "5", "jardinera", "5")
-    proveedor6 = Proveedor("Ana", "6", "soldador", "4") 
-    proveedor7 = Proveedor("Lucho", "7", "dentista", "2")
-    proveedor8 = Proveedor("Celia", "8", "piloto", "5")
-    proveedor9 = Proveedor("Alicia", "9", "doctor", "4")
-    proveedor10 = Proveedor("Goku", "10", "programador", "4")  
+    proveedor1 = Proveedor("Miku", "1", "electricista", 5)
+    proveedor2 = Proveedor("Teto", "2", "plomera", 4)
+    proveedor3 = Proveedor("Jimbo", "3", "carpintero", 3)
+    proveedor4 = Proveedor("Lucho", "4", "pintor", 2)
+    proveedor5 = Proveedor("Marta", "5", "jardinera", 5)
+    proveedor6 = Proveedor("Ana", "6", "soldador", 4) 
+    proveedor7 = Proveedor("Lucho", "7", "dentista", 2)
+    proveedor8 = Proveedor("Celia", "8", "piloto", 5)
+    proveedor9 = Proveedor("Alicia", "9", "doctor", 4)
+    proveedor10 = Proveedor("Goku", "10", "programador", 4)  
 
     arbol.insertar(proveedor1)
     arbol.insertar(proveedor2)
@@ -137,10 +137,10 @@ def main():
             servicio_buscar = input("Ingrese el tipo de servicio a buscar: ")
             proveedores = arbol.buscar_oficio(servicio_buscar) 
             
-            if proveedores is not None:
+            if len(proveedores) > 0:
                 print(f"\nProveedores que brindan el servicio de {servicio_buscar}:")
                 for i in proveedores:
-                    print(i)
+                    print(i)   
             else:
                 print(f"No se encontraron proveedores que brinden el servicio de {servicio_buscar}.")
         #opcion 3 del menu, visualizar un listado de los proveedores en funcion a su nombre o calificacion
@@ -154,12 +154,15 @@ def main():
                 print('Seleccione una opción:')
                 opcion1 = pedir_numero()
                 listed_nodes = arbol.enlistar() 
+
                 if opcion1 == 1:
+                    print("\n=== Mostrando proveedores por nombre ===")
                     listed_nodes.sort(key=lambda x: x.nombre)  # Ordenar por nombre
                     for proveedor in listed_nodes:
                         print(proveedor)
                     # Aquí se podría implementar la lógica para mostrar proveedores por nombre
                 elif opcion1 == 2:
+                    print("\n=== Mostrando proveedores por calificacion descendente ===")
                     listed_nodes.sort(key=lambda x: x.calificacion, reverse=True)  # Ordenar por calificación descendente
                     for proveedor in listed_nodes:
                         print(proveedor)
@@ -170,6 +173,7 @@ def main():
                 else:
                     print("Opción no valida. Intente nuevamente.")
         #opcion 4 del menu, recorrido con forme al ID almacenado en el arbol
+
         elif opcion == 4:
             pass
             break
