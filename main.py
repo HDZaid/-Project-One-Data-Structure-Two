@@ -25,30 +25,46 @@ def insertar_datos(arbol):
     arbol.insertar(proveedor9)
     arbol.insertar(proveedor10)
 
+def pedir_numero():
+    while True:
+        try:
+            numero = int(input(""))
+            return numero  
+        except ValueError:
+            print("Error: debe ingresar un número válido. Inténtelo de nuevo.")
+
 def retornar_profesion(numero):
-    
-    if numero == 1:
-        return "Electricista"
-    elif numero == 2:
-        return "Plomera"
-    elif numero == 3:
-        return "Carpintero"
-    elif numero == 4:
-        return "Pintor"
-    elif numero == 5:
-        return "Jardinera"
-    elif numero == 6:
-        return "Soldador"
-    elif numero == 7:
-        return "Dentista"
-    elif numero == 8:
-        return "Piloto"
-    elif numero == 9:
-        return "Doctor"
-    elif numero == 10:
-        return "Programador"
-    else:
-        return None
+
+        if numero < 1 or numero > 13:
+            print("Número de profesión no válido. Debe ser entre 1 y 12.")
+            return None
+        # Retorna la profesión según el número ingresado
+        if numero == 1:
+            return "Electricista"
+        elif numero == 2:
+            return "Plomera"
+        elif numero == 3:
+            return "Carpintero"
+        elif numero == 4:
+            return "Pintor"
+        elif numero == 5:
+            return "Jardinera"
+        elif numero == 6:
+            return "Soldador"
+        elif numero == 7:
+            return "Dentista"
+        elif numero == 8:
+            return "Piloto"
+        elif numero == 9:
+            return "Doctor"
+        elif numero == 10:
+            return "Programador"
+        elif numero == 11:
+            return "Abogado"
+        elif numero == 12:
+            return "Arquitecto"
+        else:
+            return None   
     
 def mostrar_profesiones():
     print("Profesiones disponibles:")
@@ -62,15 +78,7 @@ def mostrar_profesiones():
     print("[ 8 ] Piloto")
     print("[ 9 ] Doctor")
     print("[ 10 ] Programador")
-        
-def pedir_numero():
-    while True:
-        try:
-            numero = int(input("Ingrese el número de la profesión: "))
-            return numero  
-        except ValueError:
-            print("Error: debe ingresar un número válido. Inténtelo de nuevo.")
-
+    print("ingresa el numero de la profesión que desea agregar al proveedor:")
 
 def menu_principal():
     print(" ---------------------------------------- ")
@@ -95,18 +103,26 @@ def main():
         if opcion == "1":
             nombre = input("Ingrese el nombre del proveedor: ")
             id = input("Ingrese el ID del proveedor: ")
+            mostrar_profesiones()
+
             while True:
-                profesion = int(input("Ingrese la profesión del proveedor: "))
-            
-            servicio = input("Ingrese el tipo de servicio: ") 
+                try :
+                    numero_profesion = pedir_numero()
+                    servicio = retornar_profesion(numero_profesion)
+                    if servicio is not None:
+                        break
+                except ValueError:
+                    print("Error: debe ingresar un número válido. Inténtelo de nuevo.")
 
-
-            calificacion = input("Ingrese la calificación del proveedor: ")
-
-
-
-
-
+            while True:
+                try:
+                    calificacion = pedir_numero()
+                    if 1 <= calificacion <= 5:
+                        break
+                    else:
+                        print("La calificación debe estar entre 1 y 5. Inténtelo de nuevo.")
+                except ValueError:
+                    print("Error: debe ingresar un número válido. Inténtelo de nuevo.")
 
             nuevo_proveedor = Proveedor(nombre, id, servicio, calificacion)
             arbol.insertar(nuevo_proveedor)
@@ -114,7 +130,7 @@ def main():
 
         elif opcion == "2":
             servicio_buscar = input("Ingrese el tipo de servicio a buscar: ")
-            arbol.buscar(servicio_buscar)
+            arbol.buscar_oficio(servicio_buscar) # no se si hay que cambiar esto, ya que el método buscar del árbol B busca claves, no objetos Proveedor directamente.
 
         elif opcion == "3":
             while True:
