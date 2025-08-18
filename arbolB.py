@@ -144,7 +144,7 @@ class ArbolB:
             nodo = self.raiz
 
         for clave in nodo.claves:
-            if clave.servicio == oficio:
+            if clave == oficio:
                 resultados.append(clave)
 
         # Si no es hoja, buscar también en los hijos

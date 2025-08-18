@@ -25,7 +25,7 @@ class Proveedor:
                     self.servicio == other.servicio and 
                     self.calificacion == other.calificacion)
         elif isinstance(other, str):
-            return self.servicio == other
+            return self.servicio.lower() == other.lower()
         elif isinstance(other, int):
             return self.id == other
         return False
