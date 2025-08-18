@@ -14,7 +14,7 @@
 
 class NodoB:
     def __init__(self, orden, es_hoja=True):
-        self.orden = orden              # Grado mínimo (orden del árbol B)
+        self.orden = orden             # Grado mínimo (orden del árbol B)
         self.claves = []               # Lista de claves (valores) almacenadas en este nodo
         self.hijos = []                # Lista de hijos de este nodo
         self.es_hoja = es_hoja         # Indica si este nodo es una hoja
@@ -100,12 +100,12 @@ class ArbolB:
         # Si encontramos la clave
         if i < len(nodo.claves) and clave == nodo.claves[i]:
             print(f" Clave {clave} encontrada en el nodo: {nodo.claves}")
-            return True
+            return clave
             
-        # Si es hoja y no se encontró
+        # Si es hoja y no se encontro
         if nodo.es_hoja:
             print(f" Clave {clave} no encontrada.")
-            return False
+            return None
             
         # Buscar recursivamente en el hijo apropiado
         return self.buscar(clave, nodo.hijos[i])
@@ -123,6 +123,37 @@ class ArbolB:
             for hijo in nodo.hijos:
                 self.mostrar(hijo, nivel + 1)
 
+    def mostrar_orden_calificacion(self, nodo=None):
+        if nodo is None:
+            nodo = self.raiz
+            
+        # Mostrar claves ordenadas por calificación
+        if len(nodo.claves) > 0:
+            for clave in sorted(nodo.claves, key=lambda x: x.calificacion):
+                print(clave)
+                
+        # Mostrar hijos solo si no es hoja
+        if not nodo.es_hoja:
+            for hijo in nodo.hijos:
+                self.mostrar_orden_calificacion(hijo)
+    
+    def buscar_oficio(self, oficio, nodo = None, resultados = None):
+        if resultados is None:
+            resultados = []
+        if nodo is None:
+            nodo = self.raiz
+
+        for clave in nodo.claves:
+            if clave.servicio == oficio:
+                resultados.append(clave)
+
+        # Si no es hoja, buscar también en los hijos
+        if not nodo.es_hoja:
+            for hijo in nodo.hijos:
+                self.buscar_oficio(oficio, hijo, resultados)
+
+        return resultados
+    
     '''
     def verificar_propiedades(self, nodo=None, es_raiz=True):
         """Función para verificar que el árbol cumple las propiedades del Árbol B"""

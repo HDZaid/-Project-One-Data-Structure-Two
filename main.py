@@ -130,7 +130,14 @@ def main():
 
         elif opcion == "2":
             servicio_buscar = input("Ingrese el tipo de servicio a buscar: ")
-            arbol.buscar_oficio(servicio_buscar) # no se si hay que cambiar esto, ya que el método buscar del árbol B busca claves, no objetos Proveedor directamente.
+            proveedores = arbol.buscar_oficio(servicio_buscar) 
+            # no se si hay que cambiar esto, ya que el método buscar del árbol B busca claves, no objetos Proveedor directamente.
+            if proveedores is not None:
+                print(f"\nProveedores que brindan el servicio de {servicio_buscar}:")
+                for i in proveedores:
+                    print(i)
+            else:
+                print(f"No se encontraron proveedores que brinden el servicio de {servicio_buscar}.")
 
         elif opcion == "3":
             while True:
@@ -150,7 +157,7 @@ def main():
                     print("Saliendo de la visualización de proveedores...")
                     break
                 else:
-                    print("Opción no válida. Intente nuevamente.")
+                    print("Opción no valida. Intente nuevamente.")
 
         elif opcion == "4":
             print("Saliendo del programa...")

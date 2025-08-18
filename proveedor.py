@@ -6,7 +6,14 @@ class Proveedor:
         self.calificacion = calificacion
 
     def __str__(self):
-        return f" \n "+'='*50+" \n ID: {self.id} \n Proveedor: {self.nombre}\n Tipo de Servicio: {self.servicio} \n Calificación: {self.calificacion} \n "+'='*50+" \n"
+        return (
+            '=' * 50 +
+            f"\n ID: {self.id} \n Proveedor: {self.nombre}\n Tipo de Servicio: {self.servicio} \n Calificación: {self.enmascarado_calificacion()}\n" +
+            '=' * 50 + "\n"
+        )
+
+    def enmascarado_calificacion(self):
+        return '★ ' * int(self.calificacion)
     
     def __eq__(self, other):
         if isinstance(other, Proveedor):
