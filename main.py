@@ -147,12 +147,17 @@ def main():
                 print('[ 2 ] Mostrar proveedores por Calificación')
                 print('[ 3 ] Salir')
                 opcion1 = input("Seleccione una opción: ")
+                listed_nodes = arbol.enlistar() 
                 if opcion1 == "1":
+                    listed_nodes.sort(key=lambda x: x.nombre)  # Ordenar por nombre
+                    for proveedor in listed_nodes:
+                        print(proveedor)
                     # Aquí se podría implementar la lógica para mostrar proveedores por nombre
-                    pass
                 elif opcion1 == "2":
+                    listed_nodes.sort(key=lambda x: x.calificacion, reverse=True)  # Ordenar por calificación descendente
+                    for proveedor in listed_nodes:
+                        print(proveedor)
                     # Aquí se podría implementar la lógica para mostrar proveedores por calificación
-                    pass
                 elif opcion1 == "3":
                     print("Saliendo de la visualización de proveedores...")
                     break

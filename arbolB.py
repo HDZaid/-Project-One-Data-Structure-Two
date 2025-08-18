@@ -154,6 +154,21 @@ class ArbolB:
 
         return resultados
     
+    def enlistar(self, nodo=None, lista=None):
+        if lista is None:
+            lista = []
+        if nodo is None:
+            nodo = self.raiz
+            
+        # Agregar claves del nodo actual
+        lista.extend(nodo.claves)
+        
+        # Recorrer hijos si no es hoja
+        if not nodo.es_hoja:
+            for hijo in nodo.hijos:
+                self.enlistar(hijo, lista)
+                
+        return lista
     '''
     def verificar_propiedades(self, nodo=None, es_raiz=True):
         """Función para verificar que el árbol cumple las propiedades del Árbol B"""
