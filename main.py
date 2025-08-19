@@ -5,7 +5,7 @@ def insertar_datos(arbol):
    
     proveedor1 = Proveedor("Miku", "1", "electricista", 5)
     proveedor2 = Proveedor("Teto", "2", "plomera", 4)
-    proveedor3 = Proveedor("Jimbo", "3", "carpintero", 3)
+    proveedor3 = Proveedor('kasane', '3', 'carpintero', 3)
     proveedor4 = Proveedor("Lucho", "4", "pintor", 2)
     proveedor5 = Proveedor("Marta", "5", "jardinera", 5)
     proveedor6 = Proveedor("Ana", "6", "soldador", 4) 
@@ -13,6 +13,9 @@ def insertar_datos(arbol):
     proveedor8 = Proveedor("Celia", "8", "piloto", 5)
     proveedor9 = Proveedor("Alicia", "9", "doctor", 4)
     proveedor10 = Proveedor("Goku", "10", "programador", 4)  
+    proveedor11 = Proveedor("Jimbo", "3", "carpintero", 3)
+    proveedor12 = Proveedor("Rita", "4", "abogada", 2)
+    
 
     arbol.insertar(proveedor1)
     arbol.insertar(proveedor2)
@@ -24,6 +27,8 @@ def insertar_datos(arbol):
     arbol.insertar(proveedor8)
     arbol.insertar(proveedor9)
     arbol.insertar(proveedor10)
+    arbol.insertar(proveedor11)
+    arbol.insertar(proveedor12)
 #funcion que se encarga de validar las entradas de numeros
 def pedir_numero():
     while True:
@@ -95,7 +100,17 @@ def menu_principal():
 def main():
     # Crear instancia del arbol B
     print("Ingrese el tamaño de orden del arbol B (debe ser mayor o igual a 2):")
-    tamano_orden = pedir_numero()#solicitamos al usuario ingresar el tamaño del orden del arbol
+    #solicitamos al usuario ingresar el tamaño del orden del arbol
+    while True:
+                try:
+                    tamano_orden = pedir_numero()
+                    if 1 <= tamano_orden > 1:
+                        break
+                    else:
+                        print("El tamaño del orden debe ser mayor o igual a 2. Intentelo de nuevo.")
+                except ValueError:
+                    print("Error: debe ingresar un valor valido. Intentelo de nuevo.")
+    
     arbol = ArbolB(tamano_orden)
     # Insertar datos de proveedores
     insertar_datos(arbol)#llama la funcion que ingresa los datos iniciales
@@ -116,18 +131,18 @@ def main():
                     if servicio is not None:
                         break
                 except ValueError:
-                    print("Error: debe ingresar un número válido. Inténtelo de nuevo.")
+                    print("Error: debe ingresar un número valido. Intentelo de nuevo.")
 
             while True:
                 try:
-                    print("Ingrese la calificación del proveedor (1 a 5):")
+                    print("Ingrese la calificacion del proveedor (1 a 5):")
                     calificacion = pedir_numero()
                     if 1 <= calificacion <= 5:
                         break
                     else:
-                        print("La calificación debe estar entre 1 y 5. Inténtelo de nuevo.")
+                        print("La calificacion debe estar entre 1 y 5. Intentelo de nuevo.")
                 except ValueError:
-                    print("Error: debe ingresar un número válido. Inténtelo de nuevo.")
+                    print("Error: debe ingresar un número valido. Intentelo de nuevo.")
 
             nuevo_proveedor = Proveedor(nombre, id, servicio, calificacion)
             arbol.insertar(nuevo_proveedor)
@@ -149,9 +164,9 @@ def main():
                 print('='*50)
                 print("Visualizando proveedores:")
                 print('[ 1 ] Mostrar proveedores por Nombre')
-                print('[ 2 ] Mostrar proveedores por Calificación')
+                print('[ 2 ] Mostrar proveedores por Calificacion')
                 print('[ 3 ] Salir')
-                print('Seleccione una opción:')
+                print('Seleccione una opcion:')
                 opcion1 = pedir_numero()
                 listed_nodes = arbol.enlistar() 
 
@@ -160,30 +175,33 @@ def main():
                     listed_nodes.sort(key=lambda x: x.nombre)  # Ordenar por nombre
                     for proveedor in listed_nodes:
                         print(proveedor)
-                    # Aquí se podría implementar la lógica para mostrar proveedores por nombre
+                    
                 elif opcion1 == 2:
                     print("\n=== Mostrando proveedores por calificacion descendente ===")
-                    listed_nodes.sort(key=lambda x: x.calificacion, reverse=True)  # Ordenar por calificación descendente
+                    listed_nodes.sort(key=lambda x: x.calificacion, reverse=True)  # Ordenar por calificacion descendente
                     for proveedor in listed_nodes:
                         print(proveedor)
-                    # Aquí se podría implementar la lógica para mostrar proveedores por calificación
+                    
                 elif opcion1 == 3:
-                    print("Saliendo de la visualización de proveedores...")
+                    print("Saliendo de la visualizacion de proveedores")
                     break
                 else:
-                    print("Opción no valida. Intente nuevamente.")
+                    print("Opcion no valida. Intente nuevamente.")
         #opcion 4 del menu, recorrido con forme al ID almacenado en el arbol
 
         elif opcion == 4:
-            pass
+            print("METODO DE MOSTRAR EL ARBOL #1")
+            arbol.mostrar()  # Mostrar el árbol final de forma "visual"
             break
 
         elif opcion == 5:
-            print("Saliendo del programa...")
+            print("SALIENDO DEL PROGRAMA")
             break
 
         else:
-            print("Opción no válida. Intente nuevamente.")  
+            print("Opcion no valida. Intente nuevamente.")  
+    
+    
     
     
 
