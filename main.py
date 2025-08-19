@@ -1,6 +1,7 @@
 from proveedor import Proveedor
 from arbolB import ArbolB
 #funcion que inserta datos iniciales en el arbol
+
 def insertar_datos(arbol):
    
     proveedor1 = Proveedor("Miku", "1", "electricista", 5)
@@ -16,7 +17,6 @@ def insertar_datos(arbol):
     proveedor11 = Proveedor("Jimbo", "3", "carpintero", 3)
     proveedor12 = Proveedor("Rita", "4", "abogada", 2)
     
-
     arbol.insertar(proveedor1)
     arbol.insertar(proveedor2)
     arbol.insertar(proveedor3)
@@ -30,6 +30,7 @@ def insertar_datos(arbol):
     arbol.insertar(proveedor11)
     arbol.insertar(proveedor12)
 #funcion que se encarga de validar las entradas de numeros
+
 def pedir_numero():
     while True:
         try:
@@ -38,6 +39,7 @@ def pedir_numero():
         except ValueError:
             print("Error: debe ingresar un numero valido. Intentelo de nuevo.")
 #funcion que retorna la seleccion de la profesion
+
 def retornar_profesion(numero):
 
         if numero < 1 or numero > 13:
@@ -70,7 +72,8 @@ def retornar_profesion(numero):
             return "Arquitecto"
         else:
             return None   
-#prints de todas las profesiones 
+#prints de todas las profesiones
+
 def mostrar_profesiones():
     print("Profesiones disponibles:")
     print("[ 1 ] electricista")
@@ -87,6 +90,7 @@ def mostrar_profesiones():
     print("[ 12 ] arquitecto")
     print("ingresa el numero de la profesion que desea agregar al proveedor:")
 #print del menu principal
+
 def menu_principal():
     print(" ---------------------------------------- ")
     print(" BIENVENIDO A SERVICIOS LOCALES S.A. ")
@@ -94,20 +98,21 @@ def menu_principal():
     print("[ 1 ] INSERTAR UN NUEVO PROVEEDOR")
     print("[ 2 ] BUSCAR PROVEEDORES POR SERVICIO")
     print("[ 3 ] VISUALIZAR PROVEEDORES")
-    print("[ 4 ] recorrido con forme al orden del arbol")
+    print("[ 4 ] RECORRIDO DEL ARBOL POR ID (Actual)")
     print("[ 5 ] SALIR")
 
 def main():
     # Crear instancia del arbol B
-    print("Ingrese el tamaño de orden del arbol B (debe ser mayor o igual a 2):")
+    print("Ingrese el tamaño de orden del arbol B (debe ser mayor o igual a 3):")
     #solicitamos al usuario ingresar el tamano del orden del arbol
+    
     while True:
                 try:
                     tamano_orden = pedir_numero()
-                    if 1 <= tamano_orden > 1:
+                    if 3 <= tamano_orden > 1:
                         break
                     else:
-                        print("El tamaño del orden debe ser mayor o igual a 2. Intentelo de nuevo.")
+                        print("El tamaño del orden debe ser mayor o igual a 3. Intentelo de nuevo.")
                 except ValueError:
                     print("Error: debe ingresar un valor valido. Intentelo de nuevo.")
     
@@ -147,6 +152,7 @@ def main():
             nuevo_proveedor = Proveedor(nombre, id, servicio, calificacion)
             arbol.insertar(nuevo_proveedor)
             print(f"Proveedor: {nombre}, que brinda el servicio de: {servicio} ha sido insertado correctamente.")
+
         #opcion 2 del menu, buscar proveedores por servicio
         elif opcion == 2:
             servicio_buscar = input("Ingrese el tipo de servicio a buscar: ")
@@ -159,6 +165,7 @@ def main():
             else:
                 print(f"No se encontraron proveedores que brinden el servicio de {servicio_buscar}.")
         #opcion 3 del menu, visualizar un listado de los proveedores en funcion a su nombre o calificacion
+
         elif opcion == 3:
             while True:
                 print('='*50)
@@ -166,7 +173,7 @@ def main():
                 print('[ 1 ] Mostrar proveedores por Nombre')
                 print('[ 2 ] Mostrar proveedores por Calificacion')
                 print('[ 3 ] Salir')
-                print('Seleccione una opcion:')
+                print('Seleccione una opcion: ')
                 opcion1 = pedir_numero()
                 listed_nodes = arbol.enlistar() 
 
@@ -190,9 +197,10 @@ def main():
         #opcion 4 del menu, recorrido con forme al ID almacenado en el arbol
 
         elif opcion == 4:
-            print("METODO DE MOSTRAR EL ARBOL #1")
-            arbol.mostrar()  # Mostrar el arbol final de forma "visual"
-            break
+            print("Mostrar el arbol actual de forma 'visual' [ID's]:")
+            arbol.mostrar()  
+            # Mostrar el arbol actual de forma "visual"
+            input("Presiona ENTER para continuar...")
 
         elif opcion == 5:
             print("SALIENDO DEL PROGRAMA")
@@ -200,10 +208,5 @@ def main():
 
         else:
             print("Opcion no valida. Intente nuevamente.")  
-    
-    
-    
-    
-
 if __name__ == "__main__":
     main()

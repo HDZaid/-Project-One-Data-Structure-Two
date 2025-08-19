@@ -27,6 +27,11 @@ class ArbolB:
         self.raiz = NodoB(orden)       # Se crea la raíz vacía inicialmente
 
     def insertar(self, clave):
+        '''
+        if self.buscar(clave.id):
+            print(f"Clave {clave} ya existe en el árbol.")
+            return
+        '''
         raiz = self.raiz
         
         # CORREGIDO: Un nodo está lleno cuando tiene (orden - 1) claves
@@ -114,11 +119,10 @@ class ArbolB:
         if nodo is None:
             nodo = self.raiz
             
-        # Solo mostrar nodos que tienen claves
-        if len(nodo.claves) > 0:
-            print("  " * nivel + str(nodo.claves))
+        if nodo.claves:
+            ids = [clave.id for clave in nodo.claves]  
+            print("  " * nivel + str(ids))             
             
-        # Mostrar hijos solo si no es hoja
         if not nodo.es_hoja:
             for hijo in nodo.hijos:
                 self.mostrar(hijo, nivel + 1)
