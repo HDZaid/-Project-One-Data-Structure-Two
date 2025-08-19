@@ -36,14 +36,14 @@ def pedir_numero():
             numero = int(input(""))
             return numero  
         except ValueError:
-            print("Error: debe ingresar un número válido. Inténtelo de nuevo.")
+            print("Error: debe ingresar un numero valido. Intentelo de nuevo.")
 #funcion que retorna la seleccion de la profesion
 def retornar_profesion(numero):
 
         if numero < 1 or numero > 13:
-            print("Número de profesión no válido. Debe ser entre 1 y 12.")
+            print("Numero de profesion no valido. Debe ser entre 1 y 12.")
             return None
-        # Retorna la profesión según el número ingresado
+        # Retorna la profesion segun el numero ingresado
         if numero == 1:
             return "Electricista"
         elif numero == 2:
@@ -85,7 +85,7 @@ def mostrar_profesiones():
     print("[ 10 ] programador")
     print("[ 11 ] abogado")
     print("[ 12 ] arquitecto")
-    print("ingresa el numero de la profesión que desea agregar al proveedor:")
+    print("ingresa el numero de la profesion que desea agregar al proveedor:")
 #print del menu principal
 def menu_principal():
     print(" ---------------------------------------- ")
@@ -100,7 +100,7 @@ def menu_principal():
 def main():
     # Crear instancia del arbol B
     print("Ingrese el tamaño de orden del arbol B (debe ser mayor o igual a 2):")
-    #solicitamos al usuario ingresar el tamaño del orden del arbol
+    #solicitamos al usuario ingresar el tamano del orden del arbol
     while True:
                 try:
                     tamano_orden = pedir_numero()
@@ -131,7 +131,7 @@ def main():
                     if servicio is not None:
                         break
                 except ValueError:
-                    print("Error: debe ingresar un número valido. Intentelo de nuevo.")
+                    print("Error: debe ingresar un numero valido. Intentelo de nuevo.")
 
             while True:
                 try:
@@ -142,7 +142,7 @@ def main():
                     else:
                         print("La calificacion debe estar entre 1 y 5. Intentelo de nuevo.")
                 except ValueError:
-                    print("Error: debe ingresar un número valido. Intentelo de nuevo.")
+                    print("Error: debe ingresar un numero valido. Intentelo de nuevo.")
 
             nuevo_proveedor = Proveedor(nombre, id, servicio, calificacion)
             arbol.insertar(nuevo_proveedor)
@@ -191,7 +191,7 @@ def main():
 
         elif opcion == 4:
             print("METODO DE MOSTRAR EL ARBOL #1")
-            arbol.mostrar()  # Mostrar el árbol final de forma "visual"
+            arbol.mostrar()  # Mostrar el arbol final de forma "visual"
             break
 
         elif opcion == 5:
