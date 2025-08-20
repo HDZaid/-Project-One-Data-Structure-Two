@@ -126,7 +126,7 @@ def main():
         #Opcion 1 del menu, insertar un nuevo proveedor
         if opcion == 1:
             nombre = input("Ingrese el nombre del proveedor: ")
-            id = input("Ingrese el ID del proveedor: ")
+            id = pedir_numero()
             mostrar_profesiones()
 
             while True:
